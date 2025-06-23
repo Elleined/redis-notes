@@ -6,6 +6,13 @@ Notes for redis
 - It has rich set of data types.
 - It can replicate data to any number of replicas.
 
+# Use cases
+1. rate limiting
+2. database result caching
+3. session storage
+4. static page caching
+5. real-time analytics and dashboard
+
 # Advantages
 1. Very fast can perform 110, 000 SETs per seconds, about 81, 000 GETs per second
 2. Rich set of data types almost all of known data type is available in redis
