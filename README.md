@@ -64,13 +64,41 @@ Notes for redis
 3. DISCARD: discards all commands after the MULTI
 
 # Redis as caching layer 
-## 4 type of algorithm for caching
-1. Fixed window
-2. Sliding window
-3. Token bucket
-4. Leaky bucket
-
-## 2 types of caching
 1. CACHE HIT: you are sure that data is available in redis, no database check needed
 2. CACHE MISS: you're are not sure that data is available in redis, you will first check in redis before hitting the database.
+   
+## 4 types algorithm for rate limiting
+1. Fixed window: 100 request/hr meaning 100 request are only allowed per hour.
+###### problem
+- Burst request: for example in time window of 1 hour 12 to 1, attacker send burst request at 12:59 and also in 1:00 thus resulting to 200 request in just 2 seconds
+###### best use of fixed window
+- free tier api and login attempt throttling
+- user understand X request per Y time easily
+  
+2. Sliding window: 
+###### problem
+- storing the timestamp resource hungry
+- cpu usage overhead needs to recalculate every time
+###### best use cases
+- Strict API rate limiting: 
+- No burst exploits: solves the problem of fixed window
+- real time gaming (anti-cheat system): bot detection 50 moves per second
 
+3. Token bucket: a bucket has a max capacity of 100 and every 10 seconds it refills 2 tokens
+- refill_time: interval of refill
+- max_bucket_capacity: max capacity of bucket
+- refill_count: token refill
+
+###### best use case
+- it is used in AI prompting limit per word thus limiting the max request for AI call like in chatgpt
+- where request base is needed like this request takes up 2 tokens
+
+4. Leaky bucket
+
+## time base
+1. fixed window
+2. sliding window
+
+## request base
+1. token bucket
+2. leaky bucket
