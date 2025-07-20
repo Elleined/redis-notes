@@ -73,8 +73,12 @@ Notes for redis
 # Redis as caching layer 
 1. CACHE HIT: you are sure that data is available in redis, no database check needed
 2. CACHE MISS: you're are not sure that data is available in redis, you will first check in redis before hitting the database.
-   
-## 4 types algorithm for rate limiting
+
+## TTL Rules
+- Volatile Data = short ttl
+- Non volatile Data = longer ttl
+
+# 4 types algorithm for rate limiting
 1. Fixed window: 100 request/hr meaning 100 request are only allowed per hour.
 ###### problem
 - Burst request: for example in time window of 1 hour 12 to 1, attacker send burst request at 12:59 and also in 1:00 thus resulting to 200 request in just 2 seconds
